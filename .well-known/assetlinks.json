@@ -1,8 +1,0 @@
-[{
-  "relation": ["delegate_permission/common.handle_all_urls"],
-  "target": {
-    "namespace": "android_app",
-    "package_name": "com.aetherom.scanny",
-    "sha256_cert_fingerprints": ["63:DE:DD:C7:7C:68:FF:56:D0:C6:BE:0D:01:B4:59:62:E2:90:46:42:0D:E5:20:FA:50:D5:5D:CA:29:EB:03:FC"]
-  }
-}]
