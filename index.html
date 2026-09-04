@@ -6,6 +6,8 @@
 <meta name="theme-color" content="#0b0f14">
 <meta name="description" content="Scanny — free offline document scanner. Scan to PDF, Word, CSV, JPG. Auto edge detection, OCR, color mode, print, camera-to-camera transfer. 100% on-device.">
 <title>Scanny — Free Offline Document Scanner</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 <style>
 :root{--bg:#0b0f14;--p:#131a23;--p2:#1b2430;--tx:#eaf1f7;--mu:#8a97a6;--ac:#22d38b;--ac2:#0ea5e9;--dg:#f4526a;--bd:#243040;--r:18px}
 [data-theme=light]{--bg:#f2f5f9;--p:#fff;--p2:#e9eef5;--tx:#131a23;--mu:#5b6b7d;--bd:#d5dde7}
@@ -372,10 +374,7 @@ const withTimeout=(p,ms,msg)=>Promise.race([p,sleep(ms).then(()=>{throw new Erro
  $('#verTxt').textContent=APP_VER;
 
 /* purge stale caches/old service workers on every load (prevents "old version" bug) */
-(async()=>{try{
- if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();for(const r of rs)await r.unregister()}
- if(window.caches){const ks=await caches.keys();for(const k of ks)await caches.delete(k)}
-}catch(e){}})();
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 
 const ls={get:(k,d)=>{try{const v=localStorage.getItem('sc_'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set:(k,v)=>{try{localStorage.setItem('sc_'+k,JSON.stringify(v))}catch(e){}}};
 const S=Object.assign({theme:'dark',auto:true,gest:false,q:82,fmt:'pdf',cam:null},ls.get('set',{}));
