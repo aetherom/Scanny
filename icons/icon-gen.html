@@ -1,0 +1,19 @@
+<!DOCTYPE html><html><body style="font-family:system-ui;text-align:center;padding:40px">
+<h2>Scanny icon generator</h2>
+<button id="go" style="padding:14px 28px;font-size:1rem;font-weight:700;border:0;border-radius:12px;background:#22d38b;color:#04120c;cursor:pointer">Download all 3 icons</button>
+<script>
+function rr(x,y,w,h,r,c){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}
+function draw(size,pad,radius,round){
+ const cv=document.createElement('canvas');cv.width=cv.height=size;const c=cv.getContext('2d');
+ if(round){rr(0,0,size,size,radius,c);c.fillStyle='#22d38b';c.fill()}else{c.fillStyle='#22d38b';c.fillRect(0,0,size,size)}
+ const s=(size-pad*2)/24;c.save();c.translate(pad,pad);c.scale(s,s);
+ const p=new Path2D('M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2M7 12h10');
+ c.strokeStyle='#04120c';c.lineWidth=2;c.lineCap='round';c.lineJoin='round';c.stroke(p);c.restore();
+ return cv}
+function save(cv,name){cv.toBlob(b=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;a.click()})}
+document.getElementById('go').onclick=()=>{
+ save(draw(192,14,40,true),'icon-192.png');
+ setTimeout(()=>save(draw(512,38,96,true),'icon-512.png'),300);
+ setTimeout(()=>save(draw(512,104,0,false),'maskable-512.png'),600);
+ document.body.insertAdjacentHTML('beforeend','<p><b>✅ 3 files downloaded — upload them to your icons/ folder</b></p>')};
+</script></body></html>
